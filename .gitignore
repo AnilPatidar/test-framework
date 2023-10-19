@@ -16,3 +16,8 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+.idea/misc.xml
+.idea/misc.xml
+.idea/uiDesigner.xml
+app/target/cucumber-reports
+app/target/cucumber-reports.html
