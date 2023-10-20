@@ -1,13 +1,8 @@
 package stepdefinitions;
 
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import stepdefinitions.core.BaseSteps;
-
-import java.util.HashMap;
 
 public class WebsiteTestStepDefinitions {
 
