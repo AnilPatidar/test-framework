@@ -39,3 +39,10 @@ tasks.named('test') {
     // Use TestNG for unit tests.
     useTestNG()
 }
+
+task generateAllureReport(type: Exec) {
+    commandLine "allure", "serve", "app/allure-results"
+}
+
+generateAllureReport.dependsOn test
+
