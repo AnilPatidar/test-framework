@@ -24,6 +24,7 @@ dependencies {
 
     testImplementation 'io.cucumber:cucumber-java:7.11.2'
     testImplementation 'io.cucumber:cucumber-testng:7.11.0'
+    implementation group: 'io.qameta.allure', name: 'allure-cucumber7-jvm', version: '2.24.0'
 
 }
 
@@ -32,11 +33,6 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
-}
-
-application {
-    // Define the main class for the application.
-    mainClass = 'framework.CucumberTestRunner'
 }
 
 tasks.named('test') {
