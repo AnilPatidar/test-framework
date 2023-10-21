@@ -3,6 +3,7 @@ package stepdefinitions.core;
 import framework.driver.WebDriverFactory;
 import framework.model.BrowserType;
 import framework.util.ConfigReader;
+import framework.util.TestStates;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -24,7 +25,7 @@ public class Hooks {
     @Before
     public void beforeHook(Scenario scenario) {
         addScenario(scenario);
-        WebDriverFactory.initDriver(ConfigReader.getBrowserType());
+        WebDriverFactory.initDriver(TestStates.getBrowserType());
     }
 
     @After(order = 0)

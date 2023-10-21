@@ -23,7 +23,7 @@ public class WebsiteTestStepDefinitions {
         Scenario scenario= hooks.getScenario();
         scenario.log("Opening news home page");
         homePage.openNewsHome();
-        scenario.log("Running on "+ConfigReader.getBrowserType());
+        scenario.log("Running on "+TestStates.getBrowserType());
     }
 
 

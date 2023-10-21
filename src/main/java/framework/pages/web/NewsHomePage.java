@@ -30,7 +30,7 @@ public class NewsHomePage extends BasePage {
     }
 
     public NewsHomePage openNewsHome(){
-        driver.get("https://www.theguardian.com/tone/news");
+        driver.get(properties.getProperty("news.website.url"));
         return this;
     }
 
