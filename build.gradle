@@ -68,3 +68,21 @@ task webTest(type: Test) {
     }
 
 }
+
+def directoryToDelete = 'reports'
+
+// Customize the clean task.
+clean {
+    doLast {
+        // Define the path to the directory to be deleted.
+        def directoryPath = file(directoryToDelete)
+        // Check if the directory exists before deleting.
+        if (directoryPath.exists()) {
+            // Delete the directory and its contents.
+            delete directoryPath
+            println "Deleted: ${directoryToDelete}"
+        } else {
+            println "Directory not found: ${directoryToDelete}"
+        }
+    }
+}

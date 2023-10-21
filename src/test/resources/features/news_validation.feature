@@ -1,19 +1,19 @@
-Feature: News Validation
+Feature: Validating News Article
+  As a news validation site user,
+  I want to confirm the validity of a news article from The Guardian,
+  So that I can ensure it is not fake news.
 
-  @Functional @wip
-  Scenario: Confirm the first Guardian news article is valid
+  Background:
     Given I am on The Guardian website
     When I click on the first news article
     And I collect the title and content of the article
     Then I search Google for articles with the same title and content
     And I verify that at least 2 similar articles are found
+
+  @Functional @wip
+  Scenario: Confirm the first Guardian news article is valid
     Then the first Guardian news article is considered valid
 
   @Functional
   Scenario: Confirm the first Guardian news article is valid
-    Given I am on The Guardian website
-    When I click on the first news article
-    And I collect the title and content of the article
-    Then I search Google for articles with the same title and content
-    And I verify that at least 2 similar articles are found
     Then the first Guardian news article is considered valid

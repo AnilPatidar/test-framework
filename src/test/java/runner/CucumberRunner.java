@@ -14,8 +14,10 @@ import org.testng.annotations.Test;
                 "pretty",
                 "html:reports/tests/cucumber/cucumber-pretty.html",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
-                "timeline:test-output-thread/"
-        }
+                "timeline:reports/tests/test-output-thread/"
+        },
+        monochrome = true,
+        dryRun = false
 )
 @Test
 public class CucumberRunner extends AbstractTestNGCucumberTests {
