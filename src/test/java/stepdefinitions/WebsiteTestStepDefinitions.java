@@ -3,7 +3,9 @@ package stepdefinitions;
 import framework.driver.WebDriverFactory;
 import framework.pages.web.GoogleHomePage;
 import framework.pages.web.NewsHomePage;
+import framework.util.ConfigReader;
 import framework.util.TestStates;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -18,8 +20,10 @@ public class WebsiteTestStepDefinitions {
     @Given("I am on The Guardian website")
     public void iAmOnTheGuardianWebsite() {
         homePage = new NewsHomePage(WebDriverFactory.getDriver());
-        hooks.getScenario().log("Opening news home page");
+        Scenario scenario= hooks.getScenario();
+        scenario.log("Opening news home page");
         homePage.openNewsHome();
+        scenario.log("Running on "+ConfigReader.getBrowserType());
     }
 
 

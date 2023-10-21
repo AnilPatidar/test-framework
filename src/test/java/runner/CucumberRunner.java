@@ -1,8 +1,12 @@
 package runner;
 
+import framework.model.BrowserType;
+import framework.util.ConfigReader;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 
@@ -26,6 +30,12 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
     @DataProvider(parallel = true)
     public Object[][] scenarios() {
         return super.scenarios();
+    }
+
+    @BeforeTest
+    @Parameters({"browser"})
+    public void setBrowserType(BrowserType browserType){
+        ConfigReader.setBrowserType(browserType);
     }
 }
 

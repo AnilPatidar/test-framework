@@ -12,7 +12,3 @@ Feature: Validating News Article
   @Functional @wip
   Scenario: Confirm the first Guardian news article is valid
     Then the first Guardian news article is considered valid
-
-  @Functional
-  Scenario: Confirm the first Guardian news article is valid
-    Then the first Guardian news article is considered valid
