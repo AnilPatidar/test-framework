@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestStates {
-    private static ThreadLocal<Map<String, Object>> scenarioVariables = ThreadLocal.withInitial(HashMap::new);
+    private static ThreadLocal<Map<String, Object>> states = ThreadLocal.withInitial(HashMap::new);
 
-
-    public static Map<String, Object> getScenarioVariables() {
-        return scenarioVariables.get();
+    public static Map<String, Object> getTestData() {
+        return states.get();
     }
-
 
 }

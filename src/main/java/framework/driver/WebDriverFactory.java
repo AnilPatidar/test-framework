@@ -1,5 +1,6 @@
 package framework.driver;
 
+import framework.model.BrowserType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -14,24 +15,24 @@ public class WebDriverFactory {
         return drivers.get();
     }
 
-    public static WebDriver initDriver(String browser) {
+    public static WebDriver initDriver(BrowserType browserType) {
         WebDriver driver = null;
 
-        switch (browser.toLowerCase()) {
-            case "chrome":
+        switch (browserType) {
+            case CHROME:
                 driver = new ChromeDriver();
                 break;
-            case "firefox":
+            case FIREFOX:
                 driver = new FirefoxDriver();
                 break;
-            case "edge":
+            case EDGE:
                 driver = new EdgeDriver();
                 break;
-            case "ie":
+            case IE:
                 driver = new InternetExplorerDriver();
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported browser: " + browser);
+                throw new IllegalArgumentException("Unsupported browser: " + browserType);
         }
         drivers.set(driver);
         getDriver().manage().deleteAllCookies();

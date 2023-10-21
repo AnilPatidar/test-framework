@@ -2,7 +2,11 @@ package framework.pages;
 
 import org.openqa.selenium.WebDriver;
 
-public class BasePage {
-    private WebDriver webDriver;
+import java.time.Duration;
 
+public class BasePage {
+
+    public void waitFor(Duration duration){
+        
+    }
 }

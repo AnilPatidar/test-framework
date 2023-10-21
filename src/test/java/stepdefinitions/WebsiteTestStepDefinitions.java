@@ -7,46 +7,49 @@ import framework.util.TestStates;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import stepdefinitions.core.Hooks;
 
 public class WebsiteTestStepDefinitions {
 
     private NewsHomePage homePage;
     private GoogleHomePage googleSearch;
-
+    private Hooks hooks= new Hooks();
 
     @Given("I am on The Guardian website")
     public void iAmOnTheGuardianWebsite() {
-        homePage = new NewsHomePage(WebDriverFactory.initDriver("chrome"));
+        homePage = new NewsHomePage(WebDriverFactory.getDriver());
+        hooks.getScenario().log("Opening news home page");
         homePage.openNewsHome();
     }
 
 
     @When("I collect the title and content of the article")
     public void iCollectTheTitleAndContentOfTheArticle() {
+        hooks.getScenario().log("Collecting news heading");
         String articleTitle = homePage
                 .getFirstHeading()
                 .replaceAll("\\n", "");;
         System.out.println("News : "+articleTitle);
-        TestStates.getScenarioVariables().put("articleTitle", articleTitle);
+        TestStates.getTestData().put("articleTitle", articleTitle);
 
 
     }
 
     @Then("I search Google for articles with the same title and content")
     public void iSearchGoogleForArticlesWithTheSameTitleAndContent() {
-        String articleTitle = String.valueOf(TestStates.getScenarioVariables().get("articleTitle"));
+        String articleTitle = String.valueOf(TestStates.getTestData().get("articleTitle"));
         googleSearch= new GoogleHomePage(WebDriverFactory.getDriver());
         int searchResultCount = googleSearch
                                     .openGoogleSearch()
                                             .search(articleTitle)
                                                 .getSearchResults();
-        TestStates.getScenarioVariables().put("searchResultCount", searchResultCount);
+        TestStates.getTestData().put("searchResultCount", searchResultCount);
 
     }
 
     @Then("I verify that at least {int} similar articles are found")
     public void iVerifyThatAtLeastSimilarArticlesAreFound(Integer int1) {
-        int searchResultCount = (int) TestStates.getScenarioVariables().get("searchResultCount");
+        int searchResultCount = (int) TestStates.getTestData().get("searchResultCount");
         // If two or more similar articles are found, consider the first Guardian news article valid.
         if (searchResultCount >= 2) {
             System.out.println("The first Guardian news article is considered valid.");
