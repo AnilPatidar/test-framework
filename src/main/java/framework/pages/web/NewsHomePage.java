@@ -29,5 +29,10 @@ public class NewsHomePage extends BasePage {
         }
     }
 
+    public NewsHomePage openNewsHome(){
+        driver.get("https://www.theguardian.com/tone/news");
+        return this;
+    }
+
 
 }
