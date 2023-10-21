@@ -12,9 +12,9 @@ import org.testng.annotations.Test;
         plugin = {
                 "pretty",
                 "html:reports/tests/cucumber/cucumber-pretty.html",
-                "testng:reports/tests/cucumber/testng/cucumber.xml",
-                "json:reports/tests/cucumber/json/cucumberTestReport.json",
-                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"}
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+                "timeline:test-output-thread/"
+        }
 )
 @Test
 public class CucumberRunner extends AbstractTestNGCucumberTests {
