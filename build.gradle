@@ -28,11 +28,10 @@ java {
 
 //This test block is used to configure the TestNG tests and set up logging options for test execution.
 test {
-    useTestNG(){
-        suites "src/test/resources/testng.xml"
-    }
+    useTestNG()
     testLogging {
         showStandardStreams = true
+        events "PASSED", "FAILED", "SKIPPED"
     }
 }
 
@@ -53,3 +52,19 @@ task generateAllureReport(type: Exec) {
 
 generateAllureReport.dependsOn test
 
+task webTest(type: Test) {
+    systemProperty "cucumber.publish.quiet", "true"
+    systemProperty "cucumber.features", "src/test/resources/features"
+    systemProperties System.getProperties()
+    useTestNG() {
+        dependsOn clean
+        useDefaultListeners = true
+        suites("src/test/resources/testng.xml")
+
+    }
+    scanForTestClasses = false
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+    }
+
+}
