@@ -1,15 +1,14 @@
 package businesslogic;
 
 import framework.driver.WebDriverFactory;
-import framework.pages.web.GoogleHomePage;
+import framework.enums.SearchEngine;
+import framework.pages.web.SearchEnginePageFactory;
+import framework.pages.web.searchengine.SearchEnginePage;
 import framework.util.TestStates;
 import io.cucumber.java.Scenario;
 import org.testng.Assert;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GoogleSearchBL extends BaseBL{
 
@@ -17,11 +16,11 @@ public class GoogleSearchBL extends BaseBL{
         super(scenarioParam);
     }
 
-    public GoogleSearchBL searchAndGetAllResults(){
+    public GoogleSearchBL searchAndGetAllResults(SearchEngine searchEngine){
         String articleTitle = String.valueOf(TestStates.getTestData().get("articleTitle"));
-        GoogleHomePage googleSearch= new GoogleHomePage(WebDriverFactory.getDriver());
+        SearchEnginePage googleSearch=SearchEnginePageFactory.getSearchEngine(WebDriverFactory.getDriver(), searchEngine);
         List<String> searchResults = googleSearch
-                .openGoogleSearch()
+                .openSearchEngine()
                 .search(articleTitle)
                 .getSearchResults();
         TestStates.getTestData().put("searchResult", searchResults);
@@ -32,36 +31,17 @@ public class GoogleSearchBL extends BaseBL{
     }
 
     public GoogleSearchBL verifyIfSimilarArticlesAreFound(Integer noOfArticle) {
-        List<String> searchResults = (List<String>) TestStates.getTestData().get("searchResult");
         String query = (String) TestStates.getTestData().get("articleTitle");
-        int validResultsCount=0;
-        for (String result : searchResults) {
-            int relevanceScore = calculateRelevance(query, result);
-            scenario.log(String.format("News '%s', match score : %d",result,relevanceScore));
-            if (relevanceScore >= 50) {
-                validResultsCount++;
-                if(validResultsCount ==2){
-                    break;
-                }
-            }
-        }
-        scenario.log(String.format("No of valid news found : %d",validResultsCount));
-        Assert.assertTrue(validResultsCount >= noOfArticle, String.format("The News %s is a fake news",query));
+        Assert.assertTrue(getNoOfValidResults(query) >= noOfArticle, String.format("The News %s is a fake news",query));
         return this;
     }
 
 
-    public static int calculateRelevance(String query, String result) {
-        Set<String> queryKeywords = new HashSet<>(Arrays.asList(query.toLowerCase().split(" ")));
-        int totalKeywords = queryKeywords.size();
-        Set<String> resultWords = new HashSet<>(Arrays.asList(result.toLowerCase().split(" ")));
-        queryKeywords.retainAll(resultWords);
-        int matchCount = queryKeywords.size();
-        try {
-            return (matchCount * 100) / totalKeywords;
-        }catch (ArithmeticException e){
-            return 0;
-        }
+    public GoogleSearchBL verifyIfSimilarArticlesAreNotFound() {
+        String query = (String) TestStates.getTestData().get("articleTitle");
+        Assert.assertTrue(getNoOfValidResults(query) == 0, String.format("The News %s is a fake news",query));
+        return this;
     }
+
 
 }

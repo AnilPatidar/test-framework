@@ -2,23 +2,19 @@ package stepdefinitions;
 
 import businesslogic.GoogleSearchBL;
 import businesslogic.GuardianWebsiteBL;
-import framework.driver.WebDriverFactory;
-import framework.pages.web.GoogleHomePage;
+import framework.enums.SearchEngine;
+import framework.pages.web.searchengine.SearchEnginePage;
 import framework.pages.web.NewsHomePage;
-import framework.util.TestStates;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.testng.Assert;
-
-import java.util.*;
 
 public class WebsiteTestStepDefinitions {
 
     private NewsHomePage homePage;
-    private GoogleHomePage googleSearch;
+    private SearchEnginePage googleSearch;
     private Scenario scenario;
 
 
@@ -40,10 +36,10 @@ public class WebsiteTestStepDefinitions {
                 .getFirstNewsHeading();
     }
 
-    @Then("I search Google for articles with the same title and content")
-    public void iSearchGoogleForArticlesWithTheSameTitleAndContent() {
+    @Then("I search {string} for articles with the same title and content")
+    public void iSearchGoogleForArticlesWithTheSameTitleAndContent(String search) {
         new GoogleSearchBL(scenario)
-                .searchAndGetAllResults();
+                .searchAndGetAllResults(SearchEngine.valueOf(search));
     }
 
     @Then("I verify that at least {int} similar articles are found")
@@ -52,9 +48,17 @@ public class WebsiteTestStepDefinitions {
                 .verifyIfSimilarArticlesAreFound(noOfArticle);
     }
 
-    @Then("the first Guardian news article is considered valid")
-    public void theFirstGuardianNewsArticleIsConsideredValid() {
 
+    @Given("I have a fake news article from The Guardian")
+    public void iHaveAFakeNewsArticleFromTheGuardian() {
+          new GuardianWebsiteBL(scenario)
+                  .setFakeNews();
+    }
+
+    @Then("the system should mark the news article as fake if no matching articles are found")
+    public void theSystemShouldMarkTheNewsArticleAsUnverifiedIfNoMatchingArticlesAreFound() {
+        new GoogleSearchBL(scenario)
+                .verifyIfSimilarArticlesAreNotFound();
     }
 
 }

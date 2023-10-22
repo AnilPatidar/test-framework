@@ -30,4 +30,9 @@ public class GuardianWebsiteBL extends BaseBL{
         TestStates.getTestData().put("articleTitle", articleTitle);
         return  this;
     }
+
+    public GuardianWebsiteBL setFakeNews(){
+        TestStates.getTestData().put("articleTitle",properties.getProperty("fake.news.title") );
+        return  this;
+    }
 }

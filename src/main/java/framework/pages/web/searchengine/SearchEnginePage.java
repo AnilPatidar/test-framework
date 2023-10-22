@@ -1,4 +1,4 @@
-package framework.pages.web;
+package framework.pages.web.searchengine;
 
 import framework.pages.BasePage;
 import org.openqa.selenium.By;
@@ -11,27 +11,22 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoogleHomePage extends BasePage {
+public abstract class SearchEnginePage extends BasePage {
 
-    public GoogleHomePage(WebDriver driverObj){
+    @FindBy(name="q")
+    protected WebElement searchBox;
+    protected By searchResults;
+
+
+    public abstract SearchEnginePage openSearchEngine();
+
+    public SearchEnginePage(WebDriver driverObj){
         super(driverObj);
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(name="q")
-    private WebElement searchBox;
 
-    //@FindBy(tagName="h3")
-   // private List<WebElement> searchResults;
-
-    By searchResults= By.tagName("h3");
-
-    public GoogleHomePage openGoogleSearch(){
-        driver.get(properties.getProperty("google.search.url"));
-        return this;
-    }
-
-    public GoogleHomePage search(String searchQuery){
+    public SearchEnginePage search(String searchQuery){
         searchBox.sendKeys(searchQuery );
         searchBox.sendKeys(Keys.RETURN);
         return this;
