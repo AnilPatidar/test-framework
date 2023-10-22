@@ -7,8 +7,8 @@ Feature: Validating News Article
     Given I am on The Guardian website
     And I collect the title and content of the article
     Then I search Google for articles with the same title and content
-    And I verify that at least 2 similar articles are found
 
   @Functional
   Scenario: Confirm the first Guardian news article is valid
+    And I verify that at least 2 similar articles are found
     Then the first Guardian news article is considered valid

@@ -7,11 +7,4 @@
             <class name="runner.CucumberRunner" />
         </classes>
     </test>
-
-    <test name="ValidateNews-Firefox">
-        <parameter name="browser" value="FIREFOX"></parameter>
-        <classes>
-            <class name="runner.CucumberRunner" />
-        </classes>
-    </test>
 </suite>

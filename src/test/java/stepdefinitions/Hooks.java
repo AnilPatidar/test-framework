@@ -1,7 +1,8 @@
 package stepdefinitions;
 
 import framework.driver.WebDriverFactory;
-import framework.util.TestStates;
+import framework.enums.BrowserType;
+import framework.util.ConfigReader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -9,21 +10,18 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Properties;
 
 public class Hooks {
 
-    private static HashMap<Integer,Scenario> scenarios;
-
-    public Hooks(){
-        if(scenarios == null)
-            scenarios = new HashMap<Integer,Scenario>();
-    }
+    private static Properties properties
+                                = ConfigReader.getInstance().readProperties();
 
     @Before
-    public void beforeHook(Scenario scenario) {
-        addScenario(scenario);
-        WebDriverFactory.initDriver(TestStates.getBrowserType());
+    public void setup(Scenario scenario) {
+        BrowserType browser= BrowserType.valueOf(System.getProperty("browser"
+                                            ,properties.getProperty("browser.name")));
+        WebDriverFactory.initDriver(browser);
     }
 
     @After(order = 0)
@@ -40,19 +38,5 @@ public class Hooks {
             scenario.attach(sourcePath, "image/png", screenshotName);
         }
     }
-
-
-    private void addScenario(Scenario scenario){
-        Thread currentThread = Thread.currentThread();
-        int threadID = currentThread.hashCode();
-        scenarios.put(threadID,scenario);
-    }
-
-    public synchronized Scenario getScenario(){
-        Thread currentThread = Thread.currentThread();
-        int threadID = currentThread.hashCode();
-        return scenarios.get(threadID);
-    }
-
 
 }

@@ -18,9 +18,9 @@ public class ConfigReader {
                 FileInputStream ip = new FileInputStream("./src/test/resources/config.properties");
                 prop.load(ip);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+               throw new RuntimeException("config.properties not found under ./src/test/resources",e);
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Unable to read file config.properties",e);
             }
         }
         return instance;

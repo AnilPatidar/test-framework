@@ -10,10 +10,8 @@ import java.util.List;
 
 public class NewsHomePage extends BasePage {
 
-    WebDriver driver;
-
-    public NewsHomePage(WebDriver driver){
-        this.driver = driver;
+    public NewsHomePage(WebDriver driverObj){
+        super(driverObj);
         PageFactory.initElements(this.driver, this);
     }
 
