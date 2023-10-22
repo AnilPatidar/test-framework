@@ -41,8 +41,9 @@ public class WebsiteTestStepDefinitions {
         scenario.log("Collecting news heading");
         String articleTitle = homePage
                 .getFirstHeading()
-                .replaceAll("\\n", "");;
-        System.out.println("News : "+articleTitle);
+                .replaceAll("\\n", "");
+        Assert.assertNotEquals(articleTitle, "NoNewsFound" , "No news found on the website");
+        scenario.log("News Title: "+articleTitle);
         TestStates.getTestData().put("articleTitle", articleTitle);
 
 
@@ -57,31 +58,28 @@ public class WebsiteTestStepDefinitions {
                                             .search(articleTitle)
                                                 .getSearchResults();
         TestStates.getTestData().put("searchResult", searchResults);
-
+        for (String result : searchResults) {
+            scenario.log(String.format("Search results : %s",result));
+        }
     }
 
     @Then("I verify that at least {int} similar articles are found")
     public void iVerifyThatAtLeastSimilarArticlesAreFound(Integer noOfArticle) {
         List<String> searchResults = (List<String>) TestStates.getTestData().get("searchResult");
-        // If two or more similar articles are found, consider the first Guardian news article valid.
         String query = (String) TestStates.getTestData().get("articleTitle");
-
         int validResultsCount=0;
         for (String result : searchResults) {
             int relevanceScore = calculateRelevance(query, result);
-            System.out.println("Relevant relevanceScore: " + relevanceScore);
+            scenario.log(String.format("News '%s', match score : %d",result,relevanceScore));
             if (relevanceScore >= 50) {
-                System.out.println("Relevant Result: " + result);
                 validResultsCount++;
                 if(validResultsCount ==2){
                     break;
                 }
             }
         }
-        System.out.println("validResultsCount : "+validResultsCount);
-        System.out.println("noOfArticle : "+noOfArticle);
-
-        Assert.assertTrue(validResultsCount >= noOfArticle, "News found to be invalid");
+        scenario.log(String.format("No of valid news found : %d",validResultsCount));
+        Assert.assertTrue(validResultsCount >= noOfArticle, String.format("The News %s is a fake news",query));
     }
 
     @Then("the first Guardian news article is considered valid")
@@ -97,11 +95,11 @@ public class WebsiteTestStepDefinitions {
         Set<String> resultWords = new HashSet<>(Arrays.asList(result.toLowerCase().split(" ")));
         queryKeywords.retainAll(resultWords);
         int matchCount = queryKeywords.size();
-        // Calculate relevance score as a percentage
-        if(totalKeywords ==0){
+        try {
+            return (matchCount * 100) / totalKeywords;
+        }catch (ArithmeticException e){
             return 0;
         }
-        return (matchCount * 100) / totalKeywords;
     }
 
 }

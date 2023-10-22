@@ -20,9 +20,9 @@ public class NewsHomePage extends BasePage {
 
 
     public String getFirstHeading(){
-        if(newsHeadings.size()>0){
+        try{
             return newsHeadings.get(0).getText();
-        }else{
+        }catch (Exception e){
             return "NoNewsFound";
         }
     }

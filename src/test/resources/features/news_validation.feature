@@ -11,4 +11,3 @@ Feature: Validating News Article
   @Functional
   Scenario: Confirm the first Guardian news article is valid
     And I verify that at least 2 similar articles are found
-    Then the first Guardian news article is considered valid
