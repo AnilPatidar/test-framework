@@ -1,8 +1,6 @@
-package stepdefinitions.core;
+package stepdefinitions;
 
 import framework.driver.WebDriverFactory;
-import framework.model.BrowserType;
-import framework.util.ConfigReader;
 import framework.util.TestStates;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;

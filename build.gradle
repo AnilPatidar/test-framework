@@ -26,31 +26,16 @@ java {
     }
 }
 
-//This test block is used to configure the TestNG tests and set up logging options for test execution.
-test {
-    useTestNG()
-    testLogging {
-        showStandardStreams = true
-        events "PASSED", "FAILED", "SKIPPED"
-    }
-}
 
 //This block configures the encoding used for Java compilation.
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-//This block sets system properties for Test tasks.
-tasks.withType(Test) {
-    systemProperty "key", "value"
-    systemProperties = System.properties
-}
 
 task generateAllureReport(type: Exec) {
-    commandLine "allure", "serve", "app/allure-results"
+    commandLine "allure", "serve", "reports/tests/allure-results"
 }
-
-generateAllureReport.dependsOn test
 
 task webTest(type: Test) {
     systemProperty "cucumber.publish.quiet", "true"
@@ -67,22 +52,4 @@ task webTest(type: Test) {
         events "PASSED", "FAILED", "SKIPPED"
     }
 
-}
-
-def directoryToDelete = 'reports'
-
-// Customize the clean task.
-clean {
-    doLast {
-        // Define the path to the directory to be deleted.
-        def directoryPath = file(directoryToDelete)
-        // Check if the directory exists before deleting.
-        if (directoryPath.exists()) {
-            // Delete the directory and its contents.
-            delete directoryPath
-            println "Deleted: ${directoryToDelete}"
-        } else {
-            println "Directory not found: ${directoryToDelete}"
-        }
-    }
 }

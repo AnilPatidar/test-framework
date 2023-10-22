@@ -1,4 +1,4 @@
-package framework.model;
+package framework.enums;
 
 public enum BrowserType {
         CHROME,

@@ -1,6 +1,6 @@
 package framework.util;
 
-import framework.model.BrowserType;
+import framework.enums.BrowserType;
 
 import java.util.HashMap;
 import java.util.Map;

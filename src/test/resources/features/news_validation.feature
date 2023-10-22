@@ -9,6 +9,6 @@ Feature: Validating News Article
     Then I search Google for articles with the same title and content
     And I verify that at least 2 similar articles are found
 
-  @Functional @wip
+  @Functional
   Scenario: Confirm the first Guardian news article is valid
     Then the first Guardian news article is considered valid

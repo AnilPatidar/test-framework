@@ -3,13 +3,11 @@ package stepdefinitions;
 import framework.driver.WebDriverFactory;
 import framework.pages.web.GoogleHomePage;
 import framework.pages.web.NewsHomePage;
-import framework.util.ConfigReader;
 import framework.util.TestStates;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import stepdefinitions.core.Hooks;
 
 public class WebsiteTestStepDefinitions {
 
@@ -52,10 +50,10 @@ public class WebsiteTestStepDefinitions {
     }
 
     @Then("I verify that at least {int} similar articles are found")
-    public void iVerifyThatAtLeastSimilarArticlesAreFound(Integer int1) {
+    public void iVerifyThatAtLeastSimilarArticlesAreFound(Integer noOfArticle) {
         int searchResultCount = (int) TestStates.getTestData().get("searchResultCount");
         // If two or more similar articles are found, consider the first Guardian news article valid.
-        if (searchResultCount >= 2) {
+        if (searchResultCount >= noOfArticle) {
             System.out.println("The first Guardian news article is considered valid.");
         } else {
             System.out.println("The article may not be valid or there are not enough similar articles found.");

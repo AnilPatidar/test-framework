@@ -1,6 +1,6 @@
 package framework.driver;
 
-import framework.model.BrowserType;
+import framework.enums.BrowserType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
