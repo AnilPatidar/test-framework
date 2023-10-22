@@ -24,6 +24,12 @@ To generate Allur report , use following command :
 allure serve reports/tests/allure-results
 
 
+Cucumber report :
+
+https://reports.cucumber.io/reports/2ef3f393-e9e5-4a1c-af16-160135a0fc36
+
+
+
 
 
 
